@@ -17,20 +17,35 @@ public class MenuItem
             throws IllegalMenuItemTypeException, IllegalMenuItemNameException,
             IllegalMenuItemPriceException
     {
-        this.itemType = MenuItemType.Gelato;
-        this.name = "";
-        this.price = 42;
+        if(itemType == null)
+        {
+            throw new IllegalMenuItemTypeException();
+        }
+        if(name == null || name.trim().isEmpty())
+        {
+            throw new IllegalMenuItemNameException();
+        }
+        if(price < 0)
+        {
+            throw new IllegalMenuItemPriceException(price);
+        }
+        this.itemType = itemType;
+        this.name = name;
+        this.price = price;
     }
     
-    public MenuItemType getItemType() {
-        return MenuItemType.Gelato;
+    public MenuItemType getItemType()
+    {
+        return itemType;
     }
     
-    public String getName() {
-        return "";
+    public String getName()
+    {
+        return name;
     }
     
-    public int getPrice() {
-        return 42;
+    public double getPrice()
+    {
+        return price;
     }
 }

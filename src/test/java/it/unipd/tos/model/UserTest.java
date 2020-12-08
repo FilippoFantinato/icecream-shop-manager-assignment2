@@ -95,7 +95,7 @@ public class UserTest
     }
     
     @Test
-    public void isUnderage_UseUnderageAge_ReturnTrue()
+    public void testIsUnderage_UseUnderageAge_ReturnTrue()
     {
         int id = 0;
         String name = "Filippo", surname = "Fantinato";
@@ -107,7 +107,7 @@ public class UserTest
     }
     
     @Test
-    public void isUnderage_UseNotUnderageAge_ReturnFalse()
+    public void testIsUnderage_UseNotUnderageAge_ReturnFalse()
     {
         int id = 0;
         String name = "Filippo", surname = "Fantinato";

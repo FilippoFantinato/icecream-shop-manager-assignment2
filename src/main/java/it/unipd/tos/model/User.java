@@ -15,42 +15,55 @@ public class User
     private final int age;
 
     public User(int id, String name, String surname, int age)
-            throws IllegalUserAgeException, IllegalUserNameException, IllegalUserSurnameException
+            throws IllegalUserNameException, IllegalUserSurnameException, IllegalUserAgeException
     {
-        this.id = 42;
-        this.name = "";
-        this.surname = "";
-        this.age = 42;
+        if(name == null || name.trim().isEmpty())
+        {
+            throw new IllegalUserNameException();
+        }
+        if(surname == null || surname.trim().isEmpty())
+        {
+            throw new IllegalUserSurnameException();
+        }
+        if(age < 0)
+        {
+            throw new IllegalUserAgeException(age);
+        }
+        
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
     }
     
     public int getId()
     {
-        return 42;
+        return id;
     }
     
     public String getName()
     {
-        return "";
+        return name;
     }
     
     public String getSurname()
     {
-        return "";
+        return surname;
     }
     
     public int getAge()
     {
-        return 42;
+        return age;
     }
     
     public boolean isUnderage()
     {
-        return false;
+        return age < 18;
     }
 
     @Override
     public int hashCode()
     {
-        return 42;
+        return id;
     }
 }

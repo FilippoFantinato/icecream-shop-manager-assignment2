@@ -74,6 +74,24 @@ public class TakeAwayBillTest
         assertEquals(message, expected, actual, delta);
     }
     
+    @Test
+    public void testGetOrderPrice_OrderOnlyNullItems_Return0()
+    {
+        List<MenuItem> itemsOrdered = Arrays.asList(
+                null,
+                null,
+                null
+        );
+        
+        double expected = 0;
+        double actual = takeAwayBill.getOrderPrice(itemsOrdered, user, normalOrderingTime);
+        
+        String message = "Testing del caso in cui tutti i prodotti ordinati hanno valore null." +
+                "Il risultato aspettato è che il prezzo totale sia uguale a 0";
+        
+        assertEquals(message, expected, actual, delta);
+    }
+    
     /**
      * Testing del caso in cui la lista di prodotti ordinati abbia valore null
      * Il risultato aspettato è il lancio di un'eccezione
