@@ -106,10 +106,7 @@ public class TakeAwayBillTest
         double expected = 20;
         double actual = takeAwayBill.getOrderPrice(itemsOrdered, user, normalOrderingTime);
         
-        String message = "Testing del caso in cui la lista di prodotti ordinati abbia valore null." +
-                "Il risultato aspettato è il lancio di un'eccezione.";
-        
-        assertEquals(message, expected, actual, delta);
+        assertEquals(expected, actual, delta);
     }
     
     /**
@@ -152,5 +149,29 @@ public class TakeAwayBillTest
         double actual = takeAwayBill.getOrderPrice(itemsOrdered, user, normalOrderingTime);
         
         assertEquals(expected, actual, delta);
+    }
+    
+    @Test
+    public void testGetOrderPrice_OrderedMoreThan5IceCreams_50percentDiscountOnCheaperIceCream()
+    {
+        List<MenuItem> itemsOrdered = Arrays.asList(
+                new MenuItem(MenuItemType.Gelato, "Cono alla fragola", 2),
+                new MenuItem(MenuItemType.Gelato, "Cono alla banana", 3),
+                new MenuItem(MenuItemType.Gelato, "Cono alla pesca", 3),
+                new MenuItem(MenuItemType.Gelato, "Cono al melone", 7),
+                new MenuItem(MenuItemType.Gelato, "Cono alla ciliega", 9),
+                new MenuItem(MenuItemType.Gelato, "Cono alla nutella", 5),
+                new MenuItem(MenuItemType.Bevanda, "Acqua", 0.50),
+                new MenuItem(MenuItemType.Budino, "Biancaneve", 3)
+        );
+        
+        double expected = 31.50;
+        double actual = takeAwayBill.getOrderPrice(itemsOrdered, user, normalOrderingTime);
+        
+        String message = "Testing del caso in cui siano stati ordinati più di 5 gelati.\n" +
+                "Il risultato aspettato è che il prezzo totale sia la somma di tutti i prezzi dei prodotti + " +
+                "il prezzo del gelato meno caro scontato del 50%";
+        
+        assertEquals(message, expected, actual, delta);
     }
 }
