@@ -217,7 +217,7 @@ public class TakeAwayBillTest
         String message = "Testing del caso in cui l'importo di budini e gelati supera i 50€" +
                 "e si siano ordinati più di 5 gelati.\n" +
                 "Il risultato aspettato è che il prezzo totale sia la somma di tutti i prezzi dei prodotti + " +
-                "il prezzo del gelato meno caro scontato del 50%, per poi applicare un'ulteriore scontato del 10%" +
+                "il prezzo del gelato meno caro scontato del 50%, per poi applicare un'ulteriore sconto del 10%" +
                 "al prezzo totale risultante";
         
         assertEquals(message, expected, actual, delta);
