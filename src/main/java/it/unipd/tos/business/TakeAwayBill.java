@@ -4,6 +4,7 @@
 package it.unipd.tos.business;
 
 import it.unipd.tos.model.MenuItem;
+import it.unipd.tos.model.MenuItemType;
 import it.unipd.tos.model.User;
 
 import java.time.LocalTime;
@@ -33,10 +34,16 @@ public class TakeAwayBill implements ITakeAwayBill
         
         itemsOrdered = removeNullItems(itemsOrdered);
         
+        List<MenuItem> iceCreams = new ArrayList<>();
+        
         for(MenuItem item: itemsOrdered)
         {
             totalPrice += item.getPrice();
+            
+            if(item.getItemType() == MenuItemType.Gelato) { iceCreams.add(item); }
         }
+        
+        totalPrice = applyDiscountToIceCream(totalPrice, iceCreams);
         
         return totalPrice;
     }
@@ -51,5 +58,19 @@ public class TakeAwayBill implements ITakeAwayBill
         }
         
         return tmp;
+    }
+    
+    private double applyDiscountToIceCream(double totalPrice, List<MenuItem> iceCreams)
+    {
+        if(iceCreams.size() > 5)
+        {
+            iceCreams.sort(new MenuItem.MenuItemComparator());
+            
+            MenuItem cheaperIceCream = iceCreams.get(0);
+            totalPrice -= cheaperIceCream.getPrice();
+            totalPrice += cheaperIceCream.getPrice() * 0.5;
+        }
+        
+        return totalPrice;
     }
 }

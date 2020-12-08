@@ -7,6 +7,8 @@ import it.unipd.tos.model.exceptions.menuitemexceptions.IllegalMenuItemNameExcep
 import it.unipd.tos.model.exceptions.menuitemexceptions.IllegalMenuItemPriceException;
 import it.unipd.tos.model.exceptions.menuitemexceptions.IllegalMenuItemTypeException;
 
+import java.util.Comparator;
+
 public class MenuItem
 {
     private final MenuItemType itemType;
@@ -47,5 +49,16 @@ public class MenuItem
     public double getPrice()
     {
         return price;
+    }
+    
+    public static class MenuItemComparator implements Comparator<MenuItem>
+    {
+        @Override
+        public int compare(MenuItem o1, MenuItem o2)
+        {
+            double diff = o1.getPrice() - o2.getPrice();
+            
+            return diff < 0 ? -1 : (diff > 0 ? 1 : 0);
+        }
     }
 }
