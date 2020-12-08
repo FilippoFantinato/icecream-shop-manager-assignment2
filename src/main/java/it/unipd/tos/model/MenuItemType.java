@@ -1,16 +1,9 @@
 ////////////////////////////////////////////////////////////////////
 // FILIPPO FANTINATO 1218816
 ////////////////////////////////////////////////////////////////////
-package it.unipd.tos;
+package it.unipd.tos.model;
 
-/**
- * Hello world!
- *
- */
-public class App 
+public enum MenuItemType
 {
-    public boolean method()
-    {
-        return true;
-    }
+    Gelato, Budino, Bevanda
 }
