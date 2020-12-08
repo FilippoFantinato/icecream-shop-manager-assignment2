@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC "-//Checkstyle//DTD Checkstyle Configuration 1.2//EN" "https://checkstyle.org/dtds/configuration_1_2.dtd">
+<module name="Checker">
+    <module name="FileLength">
+        <property name="fileExtensions" value="java"/>
+    </module>
+    <module name="FileTabCharacter">
+        <property name="fileExtensions" value="java"/>
+        <property name="eachLine" value="true"/>
+    </module>
+    <module name="Header">
+        <property name="header"
+                  value="////////////////////////////////////////////////////////////////////\n// FILIPPO FANTINATO 1218816\n////////////////////////////////////////////////////////////////////"
+        />
+    </module>
+    <module name="TreeWalker">
+        <module name="BooleanExpressionComplexity" />
+        <module name="CyclomaticComplexity">
+            <property name="max" value="15"/>
+        </module>
+        <module name="LineLength">
+            <property name="max" value="140"/>
+        </module>
+        <module name="MethodLength">
+            <property name="max" value="300" />
+        </module>
+        <module name="EmptyCatchBlock" />
+        <module name="AvoidStarImport" />
+        <module name="IllegalImport">
+            <property name="illegalPkgs" value="java.io, java.sql"/>
+        </module>
+        <module name="NeedBraces"/>
+    </module>
+</module>
