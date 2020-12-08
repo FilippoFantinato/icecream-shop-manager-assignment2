@@ -9,8 +9,8 @@ package it.unipd.tos;
  */
 public class App 
 {
-    public static void main( String[] args )
+    public boolean method()
     {
-    
+        return true;
     }
 }
