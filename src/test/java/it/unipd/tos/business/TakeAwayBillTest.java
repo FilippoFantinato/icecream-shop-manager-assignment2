@@ -262,6 +262,47 @@ public class TakeAwayBillTest {
                 "Il risultato aspettato è che il prezzo totale sia calcolato seguendo la logica normale, " +
                 "visto che gli elementi con valore null non devono essere considerati";
         
-        assertEquals(expected, actual, delta);
+        assertEquals(message, expected, actual, delta);
+    }
+    
+    @Test
+    public void testGetOrderPrice_TotalPriceLessThan10_SumCommissionToTotalPrice()
+    {
+        List<MenuItem> itemsOrdered = Arrays.asList(
+                new MenuItem(MenuItemType.Gelato, "Cono alla fragola", 2),
+                new MenuItem(MenuItemType.Gelato, "Cono alla pesca", 3)
+        );
+        
+        double expected = 5.50;
+        double actual = takeAwayBill.getOrderPrice(itemsOrdered, user, normalOrderingTime);
+        
+        String message = "Testing del caso in cui l'ordine abbia un prezzo inferiore a 10€ e " +
+                "non si siano ordinati più di 5 gelati.\n" +
+                "Il risultato aspettato è che al prezzo totale sia aggiunta una commissione di 0.50€";
+        
+        assertEquals(message, expected, actual, delta);
+    }
+    
+    @Test
+    public void testGetOrderPrice_TotalPriceLessThan10AndOrderedMoreThan5IceCreams_SumCommissionToTotalPriceAnd50percentDiscountOnCheaperIceCream()
+    {
+        List<MenuItem> itemsOrdered = Arrays.asList(
+                new MenuItem(MenuItemType.Gelato, "Cono alla fragola", 1.50),
+                new MenuItem(MenuItemType.Gelato, "Cono alla banana", 1),
+                new MenuItem(MenuItemType.Gelato, "Cono alla nutella", 2),
+                new MenuItem(MenuItemType.Gelato, "Cono al melone", 1.50),
+                new MenuItem(MenuItemType.Gelato, "Cono alla prugna", 1),
+                new MenuItem(MenuItemType.Gelato, "Cono alla pesca", 2)
+        );
+        
+        double expected = 9;
+        double actual = takeAwayBill.getOrderPrice(itemsOrdered, user, normalOrderingTime);
+        
+        String message = "Testing del caso in cui l'ordine abbia un prezzo inferiore a 10€ e " +
+                "si siano ordinati più di 5 gelati.\n" +
+                "Il risultato aspettato è che al prezzo totale sia aggiunta una commissione di 0.50€ e, " +
+                "solo in seguito, verrà applicato lo sconto del 50% sul gelato meno caro";
+        
+        assertEquals(message, expected, actual, delta);
     }
 }
