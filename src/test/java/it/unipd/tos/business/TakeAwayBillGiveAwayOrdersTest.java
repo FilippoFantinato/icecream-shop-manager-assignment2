@@ -65,7 +65,7 @@ public class TakeAwayBillGiveAwayOrdersTest
      * Il risultato aspettato è che nessun ordine viene regalato
      */
     @Test
-    public void testGetOrderPrice_NoOneOrderBetween18And19_NoOrdersAreGifted()
+    public void testGetOrderPrice_NoOrderBetween18And19_NoOrdersAreGifted()
     {
         List<OrderHelper> orders = Arrays.asList(
                 new OrderHelper(
