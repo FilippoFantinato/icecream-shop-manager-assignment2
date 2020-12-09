@@ -66,7 +66,7 @@ public class TakeAwayBillTest {
         
         String message = "Testing del caso base con nessuno sconto applicato e tutti i parametri validi, ma con qualche" +
                 "prodotto che ha valore null." +
-                "Il risultato aspettato è che il prezzo totale sia la somma dei prezzi dei prodotti non nulli";
+                "Il risultato aspettato è che il prezzo totale sia la somma dei prezzi dei prodotti non null.";
         
         assertEquals(message, expected, actual, delta);
     }
@@ -83,13 +83,13 @@ public class TakeAwayBillTest {
         double actual = takeAwayBill.getOrderPrice(itemsOrdered, user, normalOrderingTime);
         
         String message = "Testing del caso in cui tutti i prodotti ordinati hanno valore null." +
-                "Il risultato aspettato è che il prezzo totale sia uguale a 0";
+                "Il risultato aspettato è che il prezzo totale sia uguale a 0.";
         
         assertEquals(message, expected, actual, delta);
     }
     
     /**
-     * Testing del caso in cui la lista di prodotti ordinati abbia valore null
+     * Testing del caso in cui la lista dei prodotti ordinati abbia valore null
      * Il risultato aspettato è il lancio di un'eccezione
      *
      * @throws IllegalArgumentException
@@ -165,7 +165,7 @@ public class TakeAwayBillTest {
         
         String message = "Testing del caso in cui siano stati ordinati più di 5 gelati.\n" +
                 "Il risultato aspettato è che il prezzo totale sia la somma di tutti i prezzi dei prodotti + " +
-                "il prezzo del gelato meno caro scontato del 50%";
+                "il prezzo del gelato meno caro scontato del 50%.";
         
         assertEquals(message, expected, actual, delta);
     }
@@ -185,7 +185,7 @@ public class TakeAwayBillTest {
         
         String message = "Testing del caso in cui l'importo di budini e gelati supera i 50€" +
                 "e non si siano ordinati più di 5 gelati.\n" +
-                "Il risultato aspettato è che il prezzo totale sia scontato del 10%";
+                "Il risultato aspettato è che il prezzo totale sia scontato del 10%.";
         
         assertEquals(message, expected, actual, delta);
     }
@@ -211,7 +211,7 @@ public class TakeAwayBillTest {
                 "e si siano ordinati più di 5 gelati.\n" +
                 "Il risultato aspettato è che il prezzo totale sia la somma di tutti i prezzi dei prodotti + " +
                 "il prezzo del gelato meno caro scontato del 50%, per poi applicare un'ulteriore sconto del 10%" +
-                "al prezzo totale risultante";
+                "al prezzo totale risultante.";
         
         assertEquals(message, expected, actual, delta);
     }
@@ -259,8 +259,8 @@ public class TakeAwayBillTest {
         
         String message = "Testing del caso in cui l'ordine abbia un numero di elementi superiore a 30, " +
                 "ma sono presenti dei valori null.\n" +
-                "Il risultato aspettato è che il prezzo totale sia calcolato seguendo la logica normale, " +
-                "visto che gli elementi con valore null non devono essere considerati";
+                "Il risultato aspettato è che il prezzo totale sia calcolato seguendo la logica normale " +
+                "se il numero degli elementi non null sono <= 30, visto che non devono essere considerati.";
         
         assertEquals(message, expected, actual, delta);
     }
@@ -278,7 +278,7 @@ public class TakeAwayBillTest {
         
         String message = "Testing del caso in cui l'ordine abbia un prezzo inferiore a 10€ e " +
                 "non si siano ordinati più di 5 gelati.\n" +
-                "Il risultato aspettato è che al prezzo totale sia aggiunta una commissione di 0.50€";
+                "Il risultato aspettato è che al prezzo totale sia aggiunta una commissione di 0.50€.";
         
         assertEquals(message, expected, actual, delta);
     }
@@ -301,7 +301,7 @@ public class TakeAwayBillTest {
         String message = "Testing del caso in cui l'ordine abbia un prezzo inferiore a 10€ e " +
                 "si siano ordinati più di 5 gelati.\n" +
                 "Il risultato aspettato è che al prezzo totale sia aggiunta una commissione di 0.50€ e, " +
-                "solo in seguito, verrà applicato lo sconto del 50% sul gelato meno caro";
+                "solo in seguito, verrà applicato lo sconto del 50% sul gelato meno caro.";
         
         assertEquals(message, expected, actual, delta);
     }
