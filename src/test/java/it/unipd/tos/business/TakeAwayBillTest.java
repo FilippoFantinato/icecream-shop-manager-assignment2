@@ -223,7 +223,7 @@ public class TakeAwayBillTest {
      * @throws TakeAwayBillException
      */
     @Test(expected = TakeAwayBillException.class)
-    public void testGetOrderPrice_OrderWithMoreThan30NotNullItems_ThrowException()
+    public void testGetOrderPrice_OrderWithMoreThan30NotNullItems_ThrowsException()
             throws TakeAwayBillException
     {
         final int itemsOrderedNumber = 39;
@@ -241,7 +241,7 @@ public class TakeAwayBillTest {
     }
     
     @Test
-    public void testGetOrderPrice_OrderWithMoreThan30NullItemsToo_CalculateNormalPriceWithoutThrowException()
+    public void testGetOrderPrice_OrderWithMoreThan30NullItemsToo_CalculateNormalPriceWithoutThrowsException()
             throws TakeAwayBillException
     {
         final int itemsOrderedNumber = 29;

@@ -3,8 +3,8 @@
 ////////////////////////////////////////////////////////////////////
 package it.unipd.tos.business;
 
+import it.unipd.tos.business.exceptions.TakeAwayBillException;
 import it.unipd.tos.model.MenuItem;
-import it.unipd.tos.model.MenuItemType;
 import it.unipd.tos.model.User;
 
 import java.time.LocalTime;
@@ -15,7 +15,7 @@ public class TakeAwayBill implements ITakeAwayBill
 {
     @Override
     public double getOrderPrice(List<MenuItem> itemsOrdered, User user, LocalTime orderingTime)
-            throws IllegalArgumentException
+            throws TakeAwayBillException, IllegalArgumentException
     {
         if(itemsOrdered == null)
         {
@@ -32,10 +32,13 @@ public class TakeAwayBill implements ITakeAwayBill
         
         double totalPrice = 0;
         double iceCreamsAndPuddingsPrice = 0;
-        
-        itemsOrdered = removeNullItems(itemsOrdered);
-        
         List<MenuItem> iceCreams = new ArrayList<>();
+    
+        itemsOrdered = removeNullItems(itemsOrdered);
+        if(itemsOrdered.size() > 30)
+        {
+            throw new TakeAwayBillException(itemsOrdered.size());
+        }
         
         for(MenuItem item: itemsOrdered)
         {
