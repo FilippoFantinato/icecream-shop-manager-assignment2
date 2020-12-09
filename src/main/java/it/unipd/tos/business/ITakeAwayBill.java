@@ -3,6 +3,7 @@
 ////////////////////////////////////////////////////////////////////
 package it.unipd.tos.business;
 
+import it.unipd.tos.business.exceptions.TakeAwayBillException;
 import it.unipd.tos.model.MenuItem;
 import it.unipd.tos.model.User;
 
@@ -12,5 +13,5 @@ import java.util.List;
 public interface ITakeAwayBill
 {
     double getOrderPrice(List<MenuItem> itemsOrdered, User user, LocalTime orderingTime)
-            throws IllegalArgumentException;
+            throws TakeAwayBillException, IllegalArgumentException;
 }
