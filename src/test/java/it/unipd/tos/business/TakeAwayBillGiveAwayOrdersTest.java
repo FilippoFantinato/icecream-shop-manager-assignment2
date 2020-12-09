@@ -142,7 +142,7 @@ public class TakeAwayBillGiveAwayOrdersTest
      */
     @Test
     public void
-    testGetOrderPrice_UserOrderTwoTimesBetween18And19_FirstOrderMaybeWillBeGiftedSecondOrderOfCourseNot()
+    testGetOrderPrice_UserOrderMultipleTimesBetween18And19_FirstOrderMaybeWillBeGiftedSecondOrderOfCourseNot()
     {
         List<OrderHelper> orders = Arrays.asList(
                 new OrderHelper(
@@ -165,6 +165,18 @@ public class TakeAwayBillGiveAwayOrdersTest
                 ),
                 new OrderHelper(
                         users.get(8),
+                        Arrays.asList(new MenuItem(MenuItemType.Gelato, "Gelato alla fragola", 10)),
+                        LocalTime.of(18, 22),
+                        10
+                ),
+                new OrderHelper(
+                        users.get(5),
+                        Arrays.asList(new MenuItem(MenuItemType.Gelato, "Gelato alla fragola", 10)),
+                        LocalTime.of(18, 21),
+                        10
+                ),
+                new OrderHelper(
+                        users.get(5),
                         Arrays.asList(new MenuItem(MenuItemType.Gelato, "Gelato alla fragola", 10)),
                         LocalTime.of(18, 22),
                         10

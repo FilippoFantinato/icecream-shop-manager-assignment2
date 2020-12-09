@@ -8,11 +8,17 @@ import it.unipd.tos.model.MenuItem;
 import it.unipd.tos.model.User;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
+import java.util.Map;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.HashMap;
 
 public class TakeAwayBill implements ITakeAwayBill
 {
+    private final Map<User, List<LocalTime>> orders = new HashMap<>();
+    private int ordersGivenAway = 0;
+    
     @Override
     public double getOrderPrice(List<MenuItem> itemsOrdered, User user, LocalTime orderingTime)
             throws TakeAwayBillException, IllegalArgumentException
@@ -56,9 +62,22 @@ public class TakeAwayBill implements ITakeAwayBill
             }
         }
         
-        totalPrice = addCommission(totalPrice);
-        totalPrice = applyDiscountToIceCream(totalPrice, iceCreams);
-        totalPrice = applyDiscountToTotalPrice(totalPrice, iceCreamsAndPuddingsPrice);
+        if(!orders.containsKey(user)) { orders.put(user, new ArrayList<>()); }
+        
+        if(checkConditionsToGiveAwayOrder(user, orderingTime) &&
+                giveAwayOrder(orderingTime.toSecondOfDay()))
+        {
+            totalPrice = 0;
+            ++ordersGivenAway;
+        }
+        else
+        {
+            totalPrice = addCommission(totalPrice);
+            totalPrice = applyDiscountToIceCream(totalPrice, iceCreams);
+            totalPrice = applyDiscountToTotalPrice(totalPrice, iceCreamsAndPuddingsPrice);
+        }
+        
+        orders.get(user).add(orderingTime);
         
         return totalPrice;
     }
@@ -107,5 +126,43 @@ public class TakeAwayBill implements ITakeAwayBill
         }
         
         return totalPrice;
+    }
+    
+    private boolean checkConditionsToGiveAwayOrder(User user, LocalTime orderingTime)
+    {
+        boolean tryToGiveAway = false;
+        
+        if(ordersGivenAway <= 10)
+        {
+            boolean alreadyOrderedBetweenGiveAwayTime = false;
+            
+            for(LocalTime time: orders.get(user))
+            {
+                alreadyOrderedBetweenGiveAwayTime = isBetweenGiveAwayTime(time);
+                
+                if(alreadyOrderedBetweenGiveAwayTime) { break; }
+            }
+            
+            tryToGiveAway = isBetweenGiveAwayTime(orderingTime) &&
+                    user.isUnderage() &&
+                    !alreadyOrderedBetweenGiveAwayTime;
+        }
+        
+        return tryToGiveAway;
+    }
+    
+    private boolean giveAwayOrder(long seed)
+    {
+        Random random = new Random(seed);
+    
+        return random.nextBoolean();
+    }
+    
+    private boolean isBetweenGiveAwayTime(LocalTime time)
+    {
+        final LocalTime timeStart = LocalTime.of(17, 59, 59);
+        final LocalTime timeEnd = LocalTime.of(19, 0, 1);
+    
+        return time.isAfter(timeStart) && time.isBefore(timeEnd);
     }
 }
