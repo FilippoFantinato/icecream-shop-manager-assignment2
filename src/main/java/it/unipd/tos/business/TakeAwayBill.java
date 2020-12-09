@@ -31,6 +31,7 @@ public class TakeAwayBill implements ITakeAwayBill
         }
         
         double totalPrice = 0;
+        double iceCreamsAndPuddingsPrice = 0;
         
         itemsOrdered = removeNullItems(itemsOrdered);
         
@@ -40,10 +41,20 @@ public class TakeAwayBill implements ITakeAwayBill
         {
             totalPrice += item.getPrice();
             
-            if(item.getItemType() == MenuItemType.Gelato) { iceCreams.add(item); }
+            switch(item.getItemType())
+            {
+                case Gelato: {
+                    iceCreams.add(item);
+                }
+                case Budino: {
+                    iceCreamsAndPuddingsPrice += item.getPrice();
+                    break;
+                }
+            }
         }
         
         totalPrice = applyDiscountToIceCream(totalPrice, iceCreams);
+        totalPrice = applyDiscountToTotalPrice(totalPrice, iceCreamsAndPuddingsPrice);
         
         return totalPrice;
     }
@@ -69,6 +80,16 @@ public class TakeAwayBill implements ITakeAwayBill
             MenuItem cheaperIceCream = iceCreams.get(0);
             totalPrice -= cheaperIceCream.getPrice();
             totalPrice += cheaperIceCream.getPrice() * 0.5;
+        }
+        
+        return totalPrice;
+    }
+    
+    private double applyDiscountToTotalPrice(double totalPrice, double iceCreamsAndPuddingsPrice)
+    {
+        if(iceCreamsAndPuddingsPrice > 50)
+        {
+            totalPrice = totalPrice * 0.9;
         }
         
         return totalPrice;

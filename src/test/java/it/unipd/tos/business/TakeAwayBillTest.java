@@ -174,4 +174,52 @@ public class TakeAwayBillTest
         
         assertEquals(message, expected, actual, delta);
     }
+    
+    @Test
+    public void testGetOrderPrice_IceCreamsPlusPuddingsTotalPriceOver50_10percentDiscountOnTotalPrice()
+    {
+        List<MenuItem> itemsOrdered = Arrays.asList(
+                new MenuItem(MenuItemType.Gelato, "Cono alla fragola", 10),
+                new MenuItem(MenuItemType.Gelato, "Cono alla banana", 12),
+                new MenuItem(MenuItemType.Gelato, "Cono alla nutella", 15),
+                new MenuItem(MenuItemType.Bevanda, "Acqua", 0.50),
+                new MenuItem(MenuItemType.Budino, "Biancaneve", 29)
+        );
+        
+        double expected = 59.85;
+        double actual = takeAwayBill.getOrderPrice(itemsOrdered, user, normalOrderingTime);
+        
+        String message = "Testing del caso in cui l'importo di budini e gelati supera i 50€" +
+                "e non si siano ordinati più di 5 gelati.\n" +
+                "Il risultato aspettato è che il prezzo totale sia scontato del 10%";
+        
+        assertEquals(message, expected, actual, delta);
+    }
+    
+    @Test
+    public void
+    testGetOrderPrice_IceCreamsPlusPuddingsTotalPriceOver50AndOrderedMoreThan5IceCreams_50percentDiscountOnCheaperIceCreamAnd10percentDiscountOnTotalPrice()
+    {
+        List<MenuItem> itemsOrdered = Arrays.asList(
+                new MenuItem(MenuItemType.Gelato, "Cono alla fragola", 10),
+                new MenuItem(MenuItemType.Gelato, "Cono alla banana", 12),
+                new MenuItem(MenuItemType.Gelato, "Cono alla nutella", 15),
+                new MenuItem(MenuItemType.Gelato, "Cono al melone", 10),
+                new MenuItem(MenuItemType.Gelato, "Cono alla prugna", 12),
+                new MenuItem(MenuItemType.Gelato, "Cono alla pesca", 15),
+                new MenuItem(MenuItemType.Bevanda, "Acqua", 0.50),
+                new MenuItem(MenuItemType.Budino, "Biancaneve", 29)
+        );
+        
+        double expected = 88.65;
+        double actual = takeAwayBill.getOrderPrice(itemsOrdered, user, normalOrderingTime);
+        
+        String message = "Testing del caso in cui l'importo di budini e gelati supera i 50€" +
+                "e si siano ordinati più di 5 gelati.\n" +
+                "Il risultato aspettato è che il prezzo totale sia la somma di tutti i prezzi dei prodotti + " +
+                "il prezzo del gelato meno caro scontato del 50%, per poi applicare un'ulteriore sconto del 10%" +
+                "al prezzo totale risultante";
+        
+        assertEquals(message, expected, actual, delta);
+    }
 }
