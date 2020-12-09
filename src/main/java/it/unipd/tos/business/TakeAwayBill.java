@@ -56,6 +56,7 @@ public class TakeAwayBill implements ITakeAwayBill
             }
         }
         
+        totalPrice = addCommission(totalPrice);
         totalPrice = applyDiscountToIceCream(totalPrice, iceCreams);
         totalPrice = applyDiscountToTotalPrice(totalPrice, iceCreamsAndPuddingsPrice);
         
@@ -93,6 +94,16 @@ public class TakeAwayBill implements ITakeAwayBill
         if(iceCreamsAndPuddingsPrice > 50)
         {
             totalPrice = totalPrice * 0.9;
+        }
+        
+        return totalPrice;
+    }
+    
+    private double addCommission(double totalPrice)
+    {
+        if(totalPrice != 0 && totalPrice < 10)
+        {
+            totalPrice += 0.50;
         }
         
         return totalPrice;
